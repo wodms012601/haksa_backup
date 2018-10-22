@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="com.cafe24.iumium.lesson.schedule.dao.ScheduleMapper">
+	<!--과목 조회 쿼리문 -->
+	<select id="getSubjectList" parameterType="String" resultType="com.cafe24.iumium.manage.lecture.dto.SubjectCode">
+		select distinct subject_name_korean as subjectNameKorean
+		from haksa_subject
+		where subject_code
+		in (select subject_code from haksa_lecture_status where class_by_department_number
+		in (select class_by_department_number from haksa_class_by_department where dept_code=#{deptCode}));
+    </select>
+</mapper>
